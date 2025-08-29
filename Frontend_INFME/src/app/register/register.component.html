@@ -1,0 +1,103 @@
+register.component.html
+<div class="container">
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm" class="registration-form">
+    <h2><span class="icon">👤</span> Registar Utilizador</h2>
+
+    <!-- Nome -->
+    <div class="form-group">
+      <label for="name">Nome:</label>
+      <input type="text" [(ngModel)]="newUser.name" name="name" required />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" [(ngModel)]="newUser.email" name="email" required />
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">Palavra-Passe:</label>
+      <input type="password" [(ngModel)]="newUser.password" name="password" required />
+    </div>
+
+    <!-- Tipo de Utilizador -->
+    <div class="form-group">
+      <label for="role">Tipo de Utilizador:</label>
+      <select [(ngModel)]="userType" name="userType" required>
+        <option value="" disabled selected>Selecionar o papel do utilizador</option>
+        <option value="admin">Administrador</option>
+        <option value="physician">Médico</option>
+        <option value="patient">Paciente</option>
+      </select>
+    </div>
+
+    <!-- Médico: Especialidade e Telefone -->
+    <div class="physician-fields" *ngIf="userType === 'physician'">
+      <div class="form-group">
+        <label for="specialty">Especialidade:</label>
+        <select id="specialty" [(ngModel)]="newPhysician.specialty" name="specialty" required>
+          <option value="" disabled selected>Selecionar especialidade</option>
+          <option *ngFor="let spec of specialties" [value]="spec">{{ spec }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Telefone:</label>
+        <input type="text" id="phone" [(ngModel)]="newPhysician.phone" name="phone" pattern="^\d{9}$" required />
+      </div>
+
+      <!-- Disponibilidade -->
+      <div class="form-group">
+        <label>Disponibilidade:</label>
+        <div *ngFor="let slot of availabilitySlots; let i = index" class="availability-group">
+          <div class="form-group">
+            <label>Dia da semana:</label>
+            <select [(ngModel)]="slot.dayOfWeek" name="dayOfWeek{{i}}">
+              <option value="">Selecionar dia</option>
+              <option value="segunda-feira">Segunda-feira</option>
+              <option value="terça-feira">Terça-feira</option>
+              <option value="quarta-feira">Quarta-feira</option>
+              <option value="quinta-feira">Quinta-feira</option>
+              <option value="sexta-feira">Sexta-feira</option>
+              <option value="sábado">Sábado</option>
+              <option value="domingo">Domingo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Das:</label>
+            <input type="time" [(ngModel)]="slot.from" name="from{{i}}" />
+          </div>
+          <div class="form-group">
+            <label>Até:</label>
+            <input type="time" [(ngModel)]="slot.to" name="to{{i}}" />
+          </div>
+          <button type="button" class="btn-secondary" (click)="removeSlot(i)" *ngIf="availabilitySlots.length > 1">Remover</button>
+        </div>
+        <button type="button" class="btn-secondary" (click)="addAvailabilitySlot()">Adicionar Disponibilidade</button>
+      </div>
+    </div>
+
+    <!-- Paciente: Médico -->
+    <div class="form-group" *ngIf="userType === 'patient'">
+      <label for="specialtySelect">Especialidade do Médico:</label>
+      <select id="specialtySelect" [(ngModel)]="selectedSpecialty" name="specialtySelect" (change)="onSpecialtyChange()" required>
+        <option value="" disabled selected>Selecionar especialidade</option>
+        <option *ngFor="let spec of specialties" [value]="spec">{{ spec }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="userType === 'patient' && filteredPhysicians.length > 0">
+      <label for="physicianSelect">Médico Responsável:</label>
+      <select id="physicianSelect" [(ngModel)]="newPatient.physician" name="physicianSelect" required>
+        <option value="" disabled selected>Selecionar médico</option>
+        <option *ngFor="let physician of filteredPhysicians" [value]="physician._id">
+          {{ physician.user.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botão Submeter -->
+    <button type="submit">Registar</button>
+  </form>
+</div>

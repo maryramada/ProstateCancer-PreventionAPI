@@ -1,0 +1,123 @@
+<div class="questionnaire-page">
+  <div *ngIf="patient" class="questionnaire-container">
+    <h2>Preencher Questionário</h2>
+
+    <!-- Informações Pessoais -->
+    <h3>Informações Pessoais</h3>
+    <div class="form-group">
+      <label>
+        Idade:
+        <input [(ngModel)]="patient.formAnswers.personalInfo.age" type="number" />
+      </label>
+
+      <label>
+        Género:
+        <select [(ngModel)]="patient.formAnswers.personalInfo.gender">
+          <option value="">Selecionar</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </label>
+
+      <label>
+        Estado Civil:
+        <select [(ngModel)]="patient.formAnswers.personalInfo.maritalStatus">
+          <option [ngValue]="null">Selecionar</option>
+          <option value="Solteiro">Solteiro</option>
+          <option value="Casado">Casado</option>
+          <option value="Divorciado">Divorciado</option>
+          <option value="Viúvo">Viúvo</option>
+        </select>
+      </label>
+    </div>
+    <hr class="section-divider" />
+
+    <!-- Histórico Médico -->
+    <h3>Histórico Médico</h3>
+    <div class="form-group">
+      <label>Comorbilidades:</label>
+      <div *ngFor="let comorbidity of patient.formAnswers.medicalHistory.comorbidities; let i = index" style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+        <input [(ngModel)]="patient.formAnswers.medicalHistory.comorbidities[i]" type="text" />
+        <button type="button" (click)="patient.formAnswers.medicalHistory.comorbidities.splice(i,1)">Remover</button>
+      </div>
+      <button type="button" (click)="patient.formAnswers.medicalHistory.comorbidities.push('')">Adicionar Comorbidade</button>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.medicalHistory.priorCancerDiagnosis" type="checkbox" />
+        Diagnóstico prévio de cancro
+      </label>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.medicalHistory.prostateIssuesHistory" type="checkbox" />
+        Histórico de problemas na próstata
+      </label>
+
+      <label>
+        Data do último teste PSA:
+        <input [(ngModel)]="patient.formAnswers.medicalHistory.lastPSATestDate" type="date" />
+      </label>
+    </div>
+    <hr class="section-divider" />
+
+    <!-- Estilo de Vida -->
+    <h3>Estilo de Vida</h3>
+    <div class="form-group">
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.lifestyle.exercisesRegularly" type="checkbox" />
+        Pratica exercício físico regularmente
+      </label>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.lifestyle.smokes" type="checkbox" />
+        Fuma
+      </label>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.lifestyle.drinksAlcohol" type="checkbox" />
+        Consome bebidas alcoólicas
+      </label>
+
+      <label>
+        Qualidade da dieta:
+        <select [(ngModel)]="patient.formAnswers.lifestyle.dietQuality">
+          <option [ngValue]="null">Selecionar</option>
+          <option value="Mau">Mau</option>
+          <option value="Regular">Regular</option>
+          <option value="Boa">Boa</option>
+          <option value="Excelente">Excelente</option>
+        </select>
+      </label>
+    </div>
+    <hr class="section-divider" />
+
+    <!-- Histórico Familiar -->
+    <h3>Histórico Familiar</h3>
+    <div class="form-group">
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.familyHistory.cancer" type="checkbox" />
+        Cancro
+      </label>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.familyHistory.heartDisease" type="checkbox" />
+        Doença Cardíaca
+      </label>
+
+      <label class="checkbox-group">
+        <input [(ngModel)]="patient.formAnswers.familyHistory.prostateCancer" type="checkbox" />
+        Cancro da Próstata
+      </label>
+    </div>
+    <hr class="section-divider" />
+
+    <div class="action-buttons">
+      <button (click)="saveQuestionnaire()">Salvar</button>
+      <button (click)="cancel()">Cancelar</button>
+    </div>
+  </div>
+
+  <div *ngIf="!patient" class="loading-message">
+    <p>A carregar os dados do paciente...</p>
+  </div>
+</div>

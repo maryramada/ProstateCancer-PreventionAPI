@@ -1,0 +1,49 @@
+<div *ngIf="loading" class="loading-message">A carregar perfil...</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<div *ngIf="!loading && !error && physicianProfile" class="profile-edit-section">
+    <h2>Editar meus dados</h2>
+    <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+        <div class="form-group">
+            <label for="specialty">Especialidade</label>
+            <select id="specialty" [(ngModel)]="physicianProfile.specialty" name="specialty" required>
+                <option value="" disabled selected>Selecionar especialidade</option>
+                <option value="Urologia">Urologia</option>
+                <option value="Oncologia Médica">Oncologia Médica</option>
+                <option value="Oncologia Radioterápica">Oncologia Radioterápica</option>
+                <option value="Radiologia / Imagiologia">Radiologia / Imagiologia</option>
+                <option value="Anatomia Patológica">Anatomia Patológica</option>
+                <option value="Medicina Nuclear">Medicina Nuclear</option>
+                <option value="Psico-Oncologia">Psico-Oncologia / Psicologia Clínica</option>
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Telefone</label>
+            <input id="phone" name="phone" type="tel" [(ngModel)]="physicianProfile.phone" />
+        </div>
+
+        <div class="form-group">
+            <label>Disponibilidade</label>
+            <div *ngIf="physicianProfile.availability?.length; else noSlots">
+                <div *ngFor="let slot of physicianProfile.availability; let i = index" class="slot-row">
+                    <select name="day{{i}}" [(ngModel)]="slot.dayOfWeek" required>
+                        <option *ngFor="let d of daysOfWeek" [value]="d">{{ d }}</option>
+                    </select>
+                    <input name="from{{i}}" type="time" [(ngModel)]="slot.from" required />
+                    <input name="to{{i}}" type="time" [(ngModel)]="slot.to" required />
+                    <button type="button" (click)="removeSlot(i)">Remover</button>
+                </div>
+            </div>
+            <ng-template #noSlots>
+                <p>Nenhum horário definido.</p>
+            </ng-template>
+            <button type="button" (click)="addSlot()">+ Adicionar horário</button>
+        </div>
+        <div class="action-buttons">
+            <button type="button" class="back-button" (click)="goBack()">← Voltar</button>
+            <button type="submit" [disabled]="profileForm.invalid">Salvar alterações</button>
+        </div>
+    </form>
+</div>

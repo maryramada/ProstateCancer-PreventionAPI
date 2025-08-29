@@ -1,0 +1,20 @@
+<div class="patient-container">
+  <h2>Editar Dados da Conta</h2>
+
+  <label>
+    Nome:
+    <input type="text" [(ngModel)]="name" />
+  </label>
+  <br />
+
+  <label>
+    Email:
+    <input type="email" [(ngModel)]="email" />
+  </label>
+  <br />
+
+  <div class="action-buttons">
+    <button type="button" (click)="save()">Salvar</button>
+    <button (click)="cancel()">Cancelar</button>
+  </div>
+</div>

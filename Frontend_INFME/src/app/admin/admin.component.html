@@ -1,0 +1,46 @@
+<div *ngIf="loading" class="loading-message">A carregar...</div>
+
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<div class="user-page" *ngIf="!loading && !error">
+  <div class="header-section">
+    <h1 class="page-title">Lista de Utilizadores</h1>
+    <button (click)="goToRegister()" class="register-button">
+      <i class="lucide lucide-user-plus"></i> Registar Novo Utilizador 
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Função</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button class="icon-button" (click)="selectUser(user)">
+              <i class="lucide lucide-eye"></i>
+            </button>
+            <button class="icon-button delete" (click)="selectUser(user); deleteUser()">
+              <img src="remover.png" alt="Delete" width="24" height="24" />
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination-controls">
+    <button [disabled]="currentPage === 1" (click)="previousPage()">◀ Anterior</button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button [disabled]="currentPage === totalPages" (click)="nextPage()">Seguinte ▶</button>
+  </div>
+</div>

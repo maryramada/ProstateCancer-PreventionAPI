@@ -1,0 +1,201 @@
+:root {
+  --main-color: #FFA726;
+  --accent-color: #F26202;
+  --hover-color: #F04902;
+  --background-card: #fffaf3;
+  --text-color: #333;
+  --input-border: #ddd;
+  --input-focus-border: var(--main-color);
+  --input-background: #fff;
+  --input-shadow: rgba(0, 0, 0, 0.05);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  background: linear-gradient(to bottom right, #ffffff, var(--background-card));
+}
+
+.questionnaire-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 8rem 2rem 12rem 2rem;
+  background: linear-gradient(to bottom right, #ffffff, #fffaf3);
+  width: 100%;
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.questionnaire-container {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  margin: 2rem auto 4rem auto;
+  box-sizing: border-box;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.questionnaire-container h2 {
+  color: var(--accent-color);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.questionnaire-container h3 {
+  color: var(--main-color);
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  border-bottom: 2px solid var(--main-color);
+  padding-bottom: 0.3rem;
+}
+
+
+label {
+  display: auto;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.7rem;
+  cursor: pointer;
+  width: 300px;
+  margin: 0 0 1rem 0; 
+}
+
+/* Inputs e selects */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 2.5px solid #bbb; /* Borda mais grossa e visível */
+  border-radius: 12px;
+  background: var(--input-background);
+  box-shadow: 0 2px 8px var(--input-shadow);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  appearance: none;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 8px var(--main-color);
+}
+
+/* Checkbox */
+input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  border: 2.5px solid #bbb; /* Borda mais grossa */
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+input[type="checkbox"]:focus {
+  outline: none;
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 8px var(--main-color);
+}
+
+input[type="checkbox"]:checked {
+  background: var(--main-color);
+  border-color: var(--main-color);
+}
+
+
+
+/* Botões */
+.action-buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+button {
+  background: linear-gradient(45deg, #FFA726, #F26202);
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(242, 98, 2, 0.3);
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #F26202, #FFA726);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(240, 73, 2, 0.4);
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #888;
+  margin-top: 3rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section-divider {
+  border: none;
+  border-top: 2px solid #F26202; /* cor laranja forte */
+  margin: 0.5rem 0 1.5rem 0;
+  width: 100%;
+  display: block;
+  height: 0;
+}
+
+.button-link {
+  display: inline-block;
+  background: linear-gradient(45deg, #FFA726, #F26202);
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(242, 98, 2, 0.3);
+  min-width: 140px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-link:hover {
+  background: linear-gradient(45deg, #F26202, #FFA726);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(240, 73, 2, 0.4);
+}

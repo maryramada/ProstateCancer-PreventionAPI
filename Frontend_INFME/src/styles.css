@@ -1,0 +1,61 @@
+
+html, b:root {
+  --main-color: #FFA726;       /* laranja claro */
+  --accent-color: #F26202;     /* laranja forte */
+  --hover-color: #F04902;      /* laranja escuro */
+  --background-card: #fffaf3;  /* fundo claro do cartão */
+  --text-color: #333;          /* texto escuro */
+  --alert-bg-color: #FFF3E0;   /* amarelo claro para alertas */
+  --alert-border-color: var(--accent-color);
+  --soft-green: #E8F5E9;       /* verde claro para detalhes */
+  --light-border: #F4B76D;     /* borda leve laranja */
+  --background-color: #fffaf3; /* fundo geral */
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  font-family: Arial, sans-serif;
+}
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    background: #007bff;
+    color: white;
+    padding: 1em;
+  }
+  
+  header nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 0.5em;
+  }
+  
+  header nav a:hover {
+    text-decoration: underline;
+  }
+  
+  main {
+    flex: 1;
+    padding: 2em;
+  }
+  
+  footer {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 1em;
+  }
+
+ 
+  

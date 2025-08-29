@@ -1,0 +1,134 @@
+olha mudei o physician component html porque faltavam algumas cenas do questionario physician.component.html
+<div *ngIf="loading" class="loading-message">A carregar lista de pacientes...</div>
+
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<div class="user-page" *ngIf="!loading && !error">
+  <div class="header-section">
+    <div class="title-edit-container">
+      <h1 class="page-title">Dashboard do Médico</h1>
+      <button class="edit-button" (click)="goToEdit()">Editar Perfil</button>
+    </div>
+    <div *ngIf="physicianName" class="welcome-message">
+      <strong>Bem vindo Dr(a) {{ physicianName }}</strong>
+    </div>
+  </div>
+
+  <input type="text" placeholder="Pesquisar paciente pelo nome..." [(ngModel)]="searchTerm" (input)="filterPatients()"
+    class="search-input" />
+
+
+  <!-- Tabela de pacientes -->
+  <div class="table-wrapper" *ngIf="filteredPatients.length; else noPatients">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Alertas</th>
+          <th>Detalhes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let patient of paginatedPatients">
+          <td>{{ patient.user.name || 'Paciente sem nome' }}</td>
+          <td>{{ patient.user.email }}</td>
+          <td>
+            <span *ngIf="patient.alerts?.length; else noneAlerts">
+              {{ patient.alerts.length }} alerta(s)
+            </span>
+            <ng-template #noneAlerts>Nenhum</ng-template>
+          </td>
+          <td>
+            <button class="icon-button" (click)="selectPatient(patient)">
+              <i class="lucide lucide-eye"></i> Ver
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noPatients>
+    <div class="no-patients">
+      <p>Nenhum paciente encontrado.</p>
+    </div>
+  </ng-template>
+
+  <!-- Paginação -->
+  <div class="pagination-controls" *ngIf="filteredPatients.length">
+    <button (click)="previousPage()" [disabled]="currentPage===1">◀ Anterior</button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage===totalPages">
+      Seguinte ▶
+    </button>
+  </div>
+
+  <!-- Detalhes do paciente selecionado -->
+  <div *ngIf="selectedPatient" class="user-details">
+    <h3>Detalhes do Paciente: {{ selectedPatient.user.name }}</h3>
+    <p><strong>Email:</strong> {{ selectedPatient.user.email }}</p>
+
+    <h4>Informações Pessoais</h4>
+    <ul class="details-list">
+      <li><strong>Idade:</strong> {{ selectedPatient.formAnswers.personalInfo.age }}</li>
+      <li><strong>Género:</strong> {{ selectedPatient.formAnswers.personalInfo.gender }}</li>
+      <li><strong>Estado Civil:</strong> {{ selectedPatient.formAnswers.personalInfo.maritalStatus }}</li>
+    </ul>
+
+    <h4>Histórico Médico</h4>
+    <ul class="details-list">
+      <li>
+        <strong>Comorbilidades:</strong>
+        {{ selectedPatient.formAnswers.medicalHistory.comorbidities.join(', ') }}
+      </li>
+      <li>
+        <strong>Diagnóstico Prévio de Cancro:</strong>
+        {{ selectedPatient.formAnswers.medicalHistory.priorCancerDiagnosis ? 'Sim' : 'Não' }}
+      </li>
+      <li>
+        <strong>Histórico de Doenças da Próstata:</strong>
+        {{ selectedPatient.formAnswers.medicalHistory.prostateIssuesHistory ? 'Sim' : 'Não' }}
+      </li>
+      <li>
+        <strong>Data do Último Teste PSA:</strong>
+        {{ selectedPatient.formAnswers.medicalHistory.lastPSATestDate | date:'dd/MM/yyyy' }}
+      </li>
+    </ul>
+
+    <h4>Estilo de Vida</h4>
+    <ul class="details-list">
+      <li>
+        <strong>Pratica Exercícios Físicos Regularmente:</strong>
+        {{ selectedPatient.formAnswers.lifestyle.exercisesRegularly ? 'Sim' : 'Não' }}
+      </li>
+      <li><strong>Fumador:</strong> {{ selectedPatient.formAnswers.lifestyle.smokes ? 'Sim' : 'Não' }}</li>
+      <li><strong>Bebe Bebidas Alcoólicas:</strong> {{ selectedPatient.formAnswers.lifestyle.drinksAlcohol ? 'Sim' :
+        'Não' }}</li>
+      <li><strong>Qualidade da Dieta:</strong> {{ selectedPatient.formAnswers.lifestyle.dietQuality }}</li>
+    </ul>
+
+    <h4>Histórico Familiar</h4>
+    <ul class="details-list">
+      <li><strong>Cancro:</strong> {{ selectedPatient.formAnswers.familyHistory.cancer ? 'Sim' : 'Não' }}</li>
+      <li><strong>Cancro da Próstata:</strong> {{ selectedPatient.formAnswers.familyHistory.prostateCancer ? 'Sim' :
+        'Não' }}</li>
+      <li><strong>Doença Cardíaca:</strong> {{ selectedPatient.formAnswers.familyHistory.heartDisease ? 'Sim' : 'Não' }}
+      </li>
+    </ul>
+
+
+    <div *ngIf="selectedPatient.alerts?.length; else noAlertsDetails">
+      <div *ngFor="let alert of selectedPatient.alerts" class="alert-message">
+        <p>
+          <strong>Alerta {{ alert.alertNumber }}:</strong>
+          {{ alert.message.join(', ') }}
+        </p>
+      </div>
+    </div>
+    <ng-template #noAlertsDetails>
+      <p class="no-alerts">
+        Não existem alertas disponíveis para este paciente.
+      </p>
+    </ng-template>
+  </div>
+</div>

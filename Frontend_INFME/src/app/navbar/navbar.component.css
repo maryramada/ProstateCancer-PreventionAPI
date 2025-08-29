@@ -1,0 +1,61 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(90deg, #FFA726 0%, #F26202 50%, #F04902 100%);
+  /* Degrade laranja vibrante */
+  color: white;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(242, 98, 2, 0.5);
+  z-index: 1000;
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.navbar:hover {
+  background: linear-gradient(90deg, #F26202 0%, #F04902 50%, #D74301 100%);
+  box-shadow: 0 6px 18px rgba(240, 73, 2, 0.7);
+}
+
+.navbar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin-left: 24px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 14px 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background-color: #F04902;
+  color: #fff8f0;
+  box-shadow: 0 4px 8px rgba(240, 73, 2, 0.6);
+  outline: none;
+}
+
+.nav-link.active {
+  background-color: var(--background-card);
+  color: var(--accent-color);
+  font-weight: 700;
+  box-shadow: 0 0 8px var(--accent-color);
+}

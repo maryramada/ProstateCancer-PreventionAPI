@@ -1,0 +1,70 @@
+<div class="patient-page">
+  <div class="patient-container" *ngIf="patient">
+    <h2>Bem-vindo, {{ name }}!</h2>
+    <p><strong>Email:</strong> {{ email }}</p>
+
+    <div class="action-buttons">
+      <button (click)="redirectToEdit()">Editar Dados</button>
+    </div>
+
+
+    <div class="action-buttons" *ngIf="patient.formAnswers.personalInfo.age === null">
+      <button (click)="redirectToQuestionnaire()">Preencher Questionário</button>
+    </div>
+
+    <div *ngIf="patient.formAnswers.personalInfo.age !== null">
+      <h3>Informações Pessoais</h3>
+      <p><strong>Idade:</strong> {{ patient.formAnswers.personalInfo.age }}</p>
+      <p><strong>Género:</strong> {{ patient.formAnswers.personalInfo.gender }}</p>
+      <p><strong>Estado Civil:</strong> {{ patient.formAnswers.personalInfo.maritalStatus }}</p>
+
+      <h3>Histórico Médico</h3>
+      <p><strong>Comorbilidades:</strong> {{ patient.formAnswers.medicalHistory.comorbidities.join(', ') }}</p>
+      <p><strong>Diagnóstico Prévio de Cancro:</strong> {{ patient.formAnswers.medicalHistory.priorCancerDiagnosis ?
+        'Sim' : 'Não' }}</p>
+      <p><strong>Histórico Doenças Próstata:</strong> {{ patient.formAnswers.medicalHistory.prostateIssuesHistory ?
+        'Sim' : 'Não' }}</p>
+      <p><strong>Data Último Teste PSA:</strong> {{ patient.formAnswers.medicalHistory.lastPSATestDate |
+        date:'dd/MM/yyyy' }}</p>
+
+
+      <h3>Estilo de Vida</h3>
+      <p><strong>Pratica Exercícios Físicos Regularmente:</strong>
+        {{ patient.formAnswers.lifestyle.exercisesRegularly ? 'Sim' : 'Não' }}
+      </p>
+      <p><strong>Fumador:</strong> {{ patient.formAnswers.lifestyle.smokes ? 'Sim' : 'Não' }}</p>
+      <p><strong>Bebe Bebidas Alcoólicas:</strong> {{ patient.formAnswers.lifestyle.drinksAlcohol ? 'Sim' : 'Não' }}</p>
+      <p><strong>Qualidade Dieta:</strong> {{ patient.formAnswers.lifestyle.dietQuality }}</p>
+
+      <h3>Histórico Familiar</h3>
+      <p><strong>Cancro:</strong> {{ patient.formAnswers.familyHistory.cancer ? 'Sim' : 'Não' }}</p>
+      <p><strong>Cancro Próstata:</strong> {{ patient.formAnswers.familyHistory.prostateCancer ? 'Sim' : 'Não' }}</p>
+      <p><strong>Doença Cardíaca:</strong> {{ patient.formAnswers.familyHistory.heartDisease ? 'Sim' : 'Não' }}</p>
+
+      <div class="action-buttons">
+        <button (click)="redirectToQuestionnaire()">Atualizar Questionário</button>
+      </div>
+    </div>
+
+    <div class="alert-section1">
+      <h3>Alertas</h3>
+      <div class="alert-actions">
+        <button class="main-alert-button" (click)="toggleAlerts()">Ver Alertas ({{ patient.alerts.length }})</button>
+        <button *ngIf="showAlerts" class="small-button1" (click)="deleteAllAlerts()">Apagar Todos os Alertas</button>
+      </div>
+    
+      <div *ngIf="showAlerts">
+        <div *ngFor="let alert of patient.alerts; let i = index" class="alert-box">
+          <div class="alert-content">
+            <p><strong>Alerta {{ alert.alertNumber }}:</strong> {{ alert.message }}</p>
+            <button class="small-button1" (click)="deleteAlert(i)">Apagar</button>
+          </div>
+        </div>
+      </div>
+      
+    
+
+  <div *ngIf="!patient" class="loading-message">
+    <p>A carregar os dados do paciente...</p>
+  </div>
+</div>
